@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <!-- Wendel the worm: flat vector, thick outlines, pastel office palette -->
+  <defs>
+    <clipPath id="floor"><rect x="0" y="0" width="1000" height="1000"/></clipPath>
+  </defs>
+  <!-- background -->
+  <rect width="1000" height="1000" fill="#F3E9DC"/>
+  <rect x="0" y="760" width="1000" height="240" fill="#E4D5C3"/>
+  <line x1="0" y1="760" x2="1000" y2="760" stroke="#2B2B2B" stroke-width="10"/>
+
+  <!-- shadow -->
+  <ellipse cx="500" cy="790" rx="230" ry="26" fill="#000" opacity="0.10"/>
+
+  <!-- tail segments (back to front) -->
+  <g stroke="#2B2B2B" stroke-width="14" fill="#F2A7B5">
+    <ellipse cx="740" cy="700" rx="95" ry="80"/>
+    <ellipse cx="640" cy="690" rx="105" ry="90"/>
+  </g>
+  <!-- body -->
+  <g stroke="#2B2B2B" stroke-width="14" fill="#F6B9C6">
+    <ellipse cx="520" cy="640" rx="140" ry="140"/>
+  </g>
+  <!-- segment lines on body -->
+  <g stroke="#2B2B2B" stroke-width="10" fill="none" stroke-linecap="round">
+    <path d="M420 560 q30 40 0 150"/>
+    <path d="M600 560 q-30 40 0 150"/>
+  </g>
+  <!-- head -->
+  <g stroke="#2B2B2B" stroke-width="14" fill="#F9C9D4">
+    <circle cx="470" cy="400" r="165"/>
+  </g>
+  <!-- blush -->
+  <ellipse cx="365" cy="440" rx="30" ry="18" fill="#F08AA0" opacity="0.8"/>
+  <ellipse cx="575" cy="440" rx="30" ry="18" fill="#F08AA0" opacity="0.8"/>
+  <!-- eyes -->
+  <g>
+    <circle cx="415" cy="385" r="48" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="12"/>
+    <circle cx="535" cy="385" r="48" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="12"/>
+    <circle cx="425" cy="392" r="22" fill="#2B2B2B"/>
+    <circle cx="545" cy="392" r="22" fill="#2B2B2B"/>
+    <circle cx="433" cy="383" r="7" fill="#FFFFFF"/>
+    <circle cx="553" cy="383" r="7" fill="#FFFFFF"/>
+  </g>
+  <!-- worried eyebrows -->
+  <g stroke="#2B2B2B" stroke-width="12" fill="none" stroke-linecap="round">
+    <path d="M375 322 q35 -22 75 -4"/>
+    <path d="M575 322 q-35 -22 -75 -4"/>
+  </g>
+  <!-- small hopeful smile -->
+  <path d="M450 470 q25 22 60 0" stroke="#2B2B2B" stroke-width="10" fill="none" stroke-linecap="round"/>
+
+  <!-- collar + oversized tie -->
+  <g stroke="#2B2B2B" stroke-width="12" stroke-linejoin="round">
+    <path d="M430 548 l40 30 l40 -30 l-14 -16 l-26 18 l-26 -18 z" fill="#FFFFFF"/>
+    <path d="M452 576 l18 -10 l18 10 l-6 26 l-12 10 l-12 -10 z" fill="#5B8DEF"/>
+    <path d="M460 600 l10 -8 l10 8 l40 150 l-50 36 l-50 -36 z" fill="#5B8DEF"/>
+  </g>
+  <!-- tie stripes -->
+  <g stroke="#2B4FA6" stroke-width="10" stroke-linecap="round">
+    <line x1="446" y1="660" x2="478" y2="640"/>
+    <line x1="454" y1="700" x2="490" y2="678"/>
+    <line x1="462" y1="740" x2="502" y2="716"/>
+  </g>
+
+  <!-- tiny arm + briefcase -->
+  <g stroke="#2B2B2B" stroke-width="12" stroke-linecap="round" fill="none">
+    <path d="M345 600 q-50 40 -40 110"/>
+  </g>
+  <g stroke="#2B2B2B" stroke-width="12" stroke-linejoin="round">
+    <rect x="255" y="690" width="120" height="86" rx="12" fill="#A36A3F"/>
+    <path d="M290 690 v-16 a14 14 0 0 1 14 -14 h30 a14 14 0 0 1 14 14 v16" fill="none"/>
+    <rect x="300" y="722" width="30" height="16" rx="4" fill="#E9C46A"/>
+  </g>
+
+  <!-- coffee cup in other hand -->
+  <g stroke="#2B2B2B" stroke-width="12" stroke-linecap="round" fill="none">
+    <path d="M650 600 q50 30 50 90"/>
+  </g>
+  <g stroke="#2B2B2B" stroke-width="12" stroke-linejoin="round">
+    <path d="M670 690 h80 l-10 72 h-60 z" fill="#FFFFFF"/>
+    <path d="M750 705 q30 0 30 24 q0 24 -34 24" fill="none"/>
+  </g>
+  <g stroke="#2B2B2B" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.55">
+    <path d="M690 672 q-10 -16 0 -32"/>
+    <path d="M715 672 q-10 -16 0 -32"/>
+  </g>
+</svg>
