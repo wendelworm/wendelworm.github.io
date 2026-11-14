@@ -368,15 +368,14 @@
     <div class="tool reveal">
       <div class="panel">
         <div class="field">
-          <label for="empName">Your name (or X handle)</label>
+          <label for="empName">Type your name (or X handle)</label>
           <input type="text" id="empName" maxlength="22" placeholder="e.g. @yourname" autocomplete="off">
         </div>
         <div class="row">
-          <button class="btn" id="clockBtn" type="button"><svg class="i"><use href="#i-badge"/></svg>Clock in</button>
-          <a class="btn ghost" id="badgeDl" href="#" download="wendel-employee-badge.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
+          <a class="btn" id="badgeDl" href="#" download="wendel-employee-badge.png"><svg class="i"><use href="#i-down"/></svg>Download badge</a>
           <a class="btn ghost" id="badgeShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
         </div>
-        <p class="hint">Your badge is made on your own device. Nothing is uploaded or stored. To post it, download the picture first, then attach it to the post on X.</p>
+        <p class="hint">The badge updates as you type. It is made on your own device. Nothing is uploaded or stored. To post it, download the picture first, then attach it to the post on X.</p>
       </div>
       <div class="canvasbox"><canvas id="badge" width="1200" height="675" aria-label="Your Wendel employee badge"></canvas></div>
     </div>
@@ -692,8 +691,8 @@
     const text = `i clocked in at wendel's company. employee #${num.toLocaleString('en-US')}, department of ${dept.toLowerCase()}. he has a meeting at 9. @wendeltheworm`;
     $('#badgeShare').href = 'https://x.com/intent/post?text=' + encodeURIComponent(text);
   }
-  $('#clockBtn').addEventListener('click', () => drawBadge($('#empName').value));
-  $('#empName').addEventListener('keydown', e => { if (e.key === 'Enter') drawBadge($('#empName').value); });
+  let badgeRaf = 0;
+  $('#empName').addEventListener('input', () => { cancelAnimationFrame(badgeRaf); badgeRaf = requestAnimationFrame(() => drawBadge($('#empName').value)); });
   $('#badgeDl').addEventListener('click', e => { try { e.currentTarget.href = $('#badge').toDataURL('image/png'); } catch (err) { e.preventDefault(); } });
   drawBadge('');
 
