@@ -89,6 +89,15 @@
   @media(max-width:760px){.shot{grid-column:span 12!important}}
   .dl{margin-top:22px;color:var(--muted);font-size:14px}
 
+  /* pfp */
+  .pfps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+  .pfpc{display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:20px;text-decoration:none;transition:transform .2s,border-color .2s}
+  .pfpc:hover{transform:translateY(-3px);border-color:var(--pink)}
+  .pfpc img{width:100%;max-width:180px;aspect-ratio:1;border-radius:50%}
+  .pfpc span{font-weight:600;font-size:14px;color:var(--beige)}
+  .pfpc span::after{content:" ↓";color:var(--pink)}
+  @media(max-width:760px){.pfps{grid-template-columns:1fr 1fr}}
+
   /* verify */
   .verify .card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:28px;padding:40px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px}
   .verify ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:14px}
@@ -139,6 +148,7 @@
     <ul>
       <li><a href="#story">Story</a></li>
       <li><a href="#office">The office</a></li>
+      <li><a href="#pfp">PFP</a></li>
       <li><a href="#verify">Verify</a></li>
       <li><a href="#buy">How to buy</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -202,8 +212,26 @@
       <figure class="shot s2 reveal" data-full="img/coffee_1600.webp"><img src="img/coffee_1000.webp" alt="Wendel with his morning coffee" loading="lazy"><figcaption>good morning.</figcaption></figure>
       <figure class="shot s3 reveal" data-full="img/elevator_1600.webp"><img src="img/elevator_1000.webp" alt="Wendel alone in the elevator, floor 14" loading="lazy"><figcaption>on my way.</figcaption></figure>
       <figure class="shot s4 reveal" data-full="img/hero_2048.webp"><img src="img/hero_1200.webp" alt="Wendel portrait" loading="lazy" style="object-position:center 30%"><figcaption>he believes in the company.</figcaption></figure>
+      <figure class="shot s2 reveal" data-full="img/meeting_1600.webp"><img src="img/meeting_1000.webp" alt="Wendel alone at a huge meeting table at 9:00" loading="lazy"><figcaption>9:00. nobody came.</figcaption></figure>
+      <figure class="shot s1 reveal" data-full="img/rain_1600.webp"><img src="img/rain_1000.webp" alt="Wendel in the rain with his briefcase over his head" loading="lazy" style="object-position:center 35%"><figcaption>he still came in.</figcaption></figure>
     </div>
     <p class="dl reveal">More scenes are added as Wendel's week goes on. Holder art gets reposted on X and added here with credit.</p>
+  </div>
+</section>
+
+<section id="pfp">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Join the office</div>
+      <h2>Wear the tie.</h2>
+      <p class="lead" style="margin-top:14px">Every coworker gets a badge photo. Pick one, set it as your profile picture, and you're on the payroll. (There is no payroll.)</p>
+    </div>
+    <div class="pfps reveal">
+      <a class="pfpc" href="pfp/wendel_pfp_classic.png" download><img src="pfp/wendel_pfp_classic_preview.png" alt="Wendel classic profile picture" loading="lazy"><span>Classic</span></a>
+      <a class="pfpc" href="pfp/wendel_pfp_wave.png" download><img src="pfp/wendel_pfp_wave_preview.png" alt="Wendel waving profile picture" loading="lazy"><span>Hello</span></a>
+      <a class="pfpc" href="pfp/wendel_pfp_coffee.png" download><img src="pfp/wendel_pfp_coffee_preview.png" alt="Wendel with coffee profile picture" loading="lazy"><span>Coffee</span></a>
+      <a class="pfpc" href="pfp/wendel_pfp_shades.png" download><img src="pfp/wendel_pfp_shades_preview.png" alt="Wendel out of office profile picture" loading="lazy"><span>Out of office</span></a>
+    </div>
   </div>
 </section>
 
