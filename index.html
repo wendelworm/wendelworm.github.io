@@ -351,7 +351,7 @@
     <div class="reveal">
       <div class="eyebrow">The story</div>
       <h2>8:59. Still at his desk.</h2>
-      <p class="lead" style="margin-top:18px">Every morning Wendel has a meeting at 9. Every morning it is 8:59 and he is still sitting here. He wears a tie that is far too big for him. He carries a briefcase. Nobody knows what's in it. He waters the office plant. He has never seen Dave from accounts, but Dave says hi.</p>
+      <p class="lead" style="margin-top:18px">Every weekday Wendel has a meeting at 9. Every weekday it is 8:59 and he is still sitting here. He wears a tie that is far too big for him. He carries a briefcase. Nobody knows what's in it. He waters the office plant. He has never seen Dave from accounts, but Dave says hi.</p>
       <p class="lead" style="margin-top:14px">No roadmap. No utility. He has a meeting.</p>
       <div class="facts">
         <div class="fact"><b>9:00</b><span>the meeting</span></div>
@@ -599,18 +599,22 @@
     const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true, weekday: 'short', hourCycle: 'h12' }).formatToParts(now).map(p => [p.type, p.value]));
     $('#nyTime').textContent = `${parts.hour}:${parts.minute} ${parts.dayPeriod || ''}`.trim();
     const ny = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    // Wendel's week: meetings Mon–Fri at 9:00. Out of office from Fri 17:00 until Mon 9:00 (matches the calendar + X posts).
+    const dow = ny.getDay(), hr = ny.getHours(), weekday = dow >= 1 && dow <= 5;
+    const ooo = dow === 6 || dow === 0 || (dow === 5 && hr >= 17);
     const target = new Date(ny); target.setHours(9, 0, 0, 0);
+    if (ny >= target) target.setDate(target.getDate() + 1);
+    while (target.getDay() === 0 || target.getDay() === 6) target.setDate(target.getDate() + 1);
+    const mins = Math.round((target - ny) / 60000), d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+    const left = d ? `${d}d ${h}h` : `${h}h ${m}m`;
     let msg;
-    if (ny.getHours() === 8 && ny.getMinutes() === 59) msg = 'it is 8:59. he is still here.';
-    else if (ny.getHours() === 9 && ny.getMinutes() < 15) msg = 'meeting in progress. probably.';
-    else {
-      if (ny >= target) target.setDate(target.getDate() + 1);
-      const mins = Math.round((target - ny) / 60000), h = Math.floor(mins / 60), m = mins % 60;
-      msg = `next meeting in ${h}h ${m}m`;
-    }
+    if (ooo) msg = `out of office. next meeting monday 9:00, in ${left}`;
+    else if (weekday && hr === 8 && ny.getMinutes() === 59) msg = 'it is 8:59. he is still here.';
+    else if (weekday && hr === 9 && ny.getMinutes() < 15) msg = 'meeting in progress. probably.';
+    else msg = `next meeting in ${left}`;
     $('#nextMeet').textContent = msg;
-    const dow = ny.getDay();
-    $$('.day').forEach(d => d.classList.toggle('today', +d.dataset.dow === dow));
+    const showDow = ooo ? 5 : dow; // on the weekend the Friday "out of office" card is today's card
+    $$('.day').forEach(c => c.classList.toggle('today', +c.dataset.dow === showDow));
   }
   tickClock(); setInterval(tickClock, 15000);
 
