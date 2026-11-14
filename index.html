@@ -192,6 +192,45 @@
   .lb img{max-width:min(96vw,1600px);max-height:92vh;border-radius:16px;box-shadow:0 40px 120px rgba(0,0,0,.8)}
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px/1 var(--ui);opacity:0;transition:.25s;pointer-events:none;z-index:60}
   .toast.show{opacity:1;transform:translateX(-50%)}
+  /* briefcase cursor (mouse only) */
+  @media(pointer:fine){
+    body{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path d='M11 7V5.5A1.5 1.5 0 0 1 12.5 4h5A1.5 1.5 0 0 1 19 5.5V7' fill='none' stroke='%231f1a16' stroke-width='2.2'/><rect x='3' y='7' width='24' height='17' rx='3.5' fill='%23a36a3f' stroke='%231f1a16' stroke-width='2'/><rect x='12.5' y='13' width='5' height='3.5' rx='1' fill='%23e9c46a' stroke='%231f1a16' stroke-width='1.4'/></svg>") 4 4,auto}
+    a,button,summary,.shot,.pick,label{cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'><path d='M11 7V5.5A1.5 1.5 0 0 1 12.5 4h5A1.5 1.5 0 0 1 19 5.5V7' fill='none' stroke='%231f1a16' stroke-width='2.2'/><rect x='3' y='7' width='24' height='17' rx='3.5' fill='%23f2a7b5' stroke='%231f1a16' stroke-width='2'/><rect x='12.5' y='13' width='5' height='3.5' rx='1' fill='%23e9c46a' stroke='%231f1a16' stroke-width='1.4'/></svg>") 4 4,pointer}
+    input,textarea{cursor:text}
+  }
+
+  /* tools: clock in + meme maker */
+  .tool{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;margin-top:40px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:26px}
+  .panel label{display:block;font:700 13px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .panel input[type=text],.panel textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--ink);font:600 17px/1.3 var(--ui);outline:none;transition:border-color .15s}
+  .panel textarea{resize:vertical;min-height:58px}
+  .panel input:focus,.panel textarea:focus{border-color:var(--pink)}
+  .panel .row{margin-top:18px}
+  .hint{margin:12px 0 0;color:var(--muted);font:500 13px/1.45 var(--ui)}
+  .canvasbox{border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.45);background:#0f0c0a}
+  .canvasbox canvas{display:block;width:100%;height:auto}
+  .picks{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:18px}
+  .pick{border-radius:12px;overflow:hidden;border:2px solid transparent;padding:0;background:none;opacity:.7;transition:opacity .15s,border-color .15s}
+  .pick img{width:100%;aspect-ratio:1;object-fit:cover}
+  .pick:hover{opacity:1}
+  .pick.on{border-color:var(--pink);opacity:1}
+  .seg{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:18px}
+  .seg button{border:0;background:none;color:var(--muted);font:700 14px/1 var(--ui);padding:9px 14px;border-radius:999px}
+  .seg button.on{background:rgba(242,167,181,.18);color:var(--ink)}
+  .field{margin-bottom:16px}
+  @media(max-width:900px){.tool{grid-template-columns:1fr}.tool .canvasbox{order:-1}.picks{grid-template-columns:repeat(4,1fr)}}
+
+  /* fridge */
+  .fridge{margin-top:40px;background:linear-gradient(180deg,#e9e3da,#d8d0c4);border-radius:30px;padding:34px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4),0 30px 80px rgba(0,0,0,.4);position:relative}
+  .fridge::before{content:"";position:absolute;right:26px;top:40px;width:14px;height:120px;border-radius:8px;background:linear-gradient(90deg,#bdb3a6,#efe9e1,#bdb3a6)}
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;padding-right:34px}
+  .fitem{position:relative;aspect-ratio:4/5;background:#fffdf8;border-radius:6px;box-shadow:0 10px 22px rgba(0,0,0,.18);display:grid;place-items:center;padding:16px;text-align:center;color:#8b8073;font:600 15px/1.4 var(--ui);transform:rotate(var(--r,0deg))}
+  .fitem::before{content:"";position:absolute;top:-10px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--m,#f2a7b5);box-shadow:0 3px 6px rgba(0,0,0,.25),inset -3px -3px 0 rgba(0,0,0,.12);z-index:2}
+  .fitem b{display:block;font:800 18px/1.2 var(--ui);color:#3a2e25;margin-bottom:6px}
+  .fitem img{width:100%;height:100%;object-fit:cover;border-radius:3px}
+  @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr;padding-right:20px}.fridge{padding:24px 20px}.fridge::before{display:none}}
+
   @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.marquee span,.hero .art .frame,.clock .dot{animation:none}}
 </style>
 </head>
@@ -211,6 +250,10 @@
   <symbol id="i-copy" viewBox="0 0 24 24"><path d="M8 3h10a2 2 0 0 1 2 2v12h-2V5H8zM5 7h10a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zm0 2v11h10V9z"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6zM4 19h16v2H4z"/></symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M13.6 5.6 20 12l-6.4 6.4-1.4-1.4 4-4H4v-2h12.2l-4-4z"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zM15.5 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.4 5.6a9 9 0 0 1 0 12.8L17 17a7 7 0 0 0 0-9.9z"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3zM16.4 8.6 18.5 10.7l2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1-2.1-2.1z"/></symbol>
+  <symbol id="i-badge" viewBox="0 0 24 24"><path d="M9 2h6v3h4a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4zm2 2v3h2V4zM8 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-3 7h6c0-1.7-1.3-2.5-3-2.5S5 16.3 5 18zm8-6v2h6v-2zm0 4v2h4v-2z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v9.6l4-4 5 5 3-3 4 4V6zm11 1.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></symbol>
 </svg>
 
 <nav>
@@ -219,12 +262,13 @@
     <ul class="links">
       <li><a href="#story">Story</a></li>
       <li><a href="#week">His week</a></li>
-      <li><a href="#office">Office</a></li>
-      <li><a href="#pfp">PFP</a></li>
+      <li><a href="#clockin">Clock in</a></li>
+      <li><a href="#memes">Memes</a></li>
       <li><a href="#verify">Verify</a></li>
       <li><a href="#buy">Buy</a></li>
     </ul>
     <div class="navr">
+      <button class="ibtn" id="sound" type="button" aria-label="Office sounds" aria-pressed="false" title="office sounds"><svg class="i" id="sndIcon"><use href="#i-mute"/></svg></button>
       <a class="ibtn" href="https://x.com/wendeltheworm" rel="noopener" aria-label="Wendel on X"><svg class="i"><use href="#i-x"/></svg></a>
       <a class="ibtn" id="tgNav" href="#" rel="noopener" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
       <a class="btn pump" id="buyNav" href="#" rel="noopener"><svg class="i"><use href="#i-pump"/></svg><span class="t">Buy $WENDEL</span></a>
@@ -335,6 +379,75 @@
       <a class="pfpc" href="pfp/wendel_pfp_wave.png" download><img src="pfp/wendel_pfp_wave_preview.png" alt="Wendel waving profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Hello</span></a>
       <a class="pfpc" href="pfp/wendel_pfp_coffee.png" download><img src="pfp/wendel_pfp_coffee_preview.png" alt="Wendel with coffee profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Coffee</span></a>
       <a class="pfpc" href="pfp/wendel_pfp_shades.png" download><img src="pfp/wendel_pfp_shades_preview.png" alt="Wendel out of office profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Out of office</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="clockin" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Human resources</div>
+      <h2>Clock in.</h2>
+      <p class="lead" style="margin-top:14px">Get your official employee badge at Wendel's company. HR assigns your department. HR is not taking questions.</p>
+    </div>
+    <div class="tool reveal">
+      <div class="panel">
+        <div class="field">
+          <label for="empName">Your name (or X handle)</label>
+          <input type="text" id="empName" maxlength="22" placeholder="e.g. @yourname" autocomplete="off">
+        </div>
+        <div class="row">
+          <button class="btn" id="clockBtn" type="button"><svg class="i"><use href="#i-badge"/></svg>Clock in</button>
+          <a class="btn ghost" id="badgeDl" href="#" download="wendel-employee-badge.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
+          <a class="btn ghost" id="badgeShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
+        </div>
+        <p class="hint">Your badge is made on your own device. Nothing is uploaded or stored. To post it, download the picture first, then attach it to the post on X.</p>
+      </div>
+      <div class="canvasbox"><canvas id="badge" width="1200" height="675" aria-label="Your Wendel employee badge"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section id="memes" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Internal communications</div>
+      <h2>Make a Wendel meme.</h2>
+      <p class="lead" style="margin-top:14px">Pick a scene, write the caption, download. Best ones get reposted by Wendel.</p>
+    </div>
+    <div class="tool reveal">
+      <div class="panel">
+        <label>Scene</label>
+        <div class="picks" id="picks"></div>
+        <label>Style</label>
+        <div class="seg" id="seg"><button type="button" data-s="wendel" class="on">wendel</button><button type="button" data-s="classic">CLASSIC</button></div>
+        <div class="field"><label for="topText">Top text</label><textarea id="topText" maxlength="80" placeholder="optional"></textarea></div>
+        <div class="field"><label for="botText">Bottom text</label><textarea id="botText" maxlength="90">per my last email</textarea></div>
+        <div class="row" style="margin-top:6px">
+          <a class="btn" id="memeDl" href="#" download="wendel-meme.png"><svg class="i"><use href="#i-down"/></svg>Download meme</a>
+        </div>
+      </div>
+      <div class="canvasbox"><canvas id="meme" width="1080" height="1080" aria-label="Your Wendel meme"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section id="fridge" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Break room</div>
+      <h2>The office fridge.</h2>
+      <p class="lead" style="margin-top:14px">Draw Wendel. Post it on X with <b>#wendelart</b> and tag <b>@wendeltheworm</b>. The best ones go on the fridge, with credit.</p>
+    </div>
+    <div class="fridge reveal">
+      <div class="fgrid">
+        <div class="fitem" style="--r:-2deg;--m:#f2a7b5"><div><b>your art here</b>crayons welcome</div></div>
+        <div class="fitem" style="--r:1.5deg;--m:#6b95f0"><div><b>your art here</b>stick figures accepted</div></div>
+        <div class="fitem" style="--r:-1deg;--m:#86efac"><div><b>your art here</b>must include tie</div></div>
+        <div class="fitem" style="--r:2deg;--m:#e9c46a"><div><b>your art here</b>Greg may appear</div></div>
+        <div class="fitem" style="--r:-1.5deg;--m:#f2a7b5"><div><b>your art here</b>no Dave (nobody has seen Dave)</div></div>
+        <div class="fitem" style="--r:1deg;--m:#6b95f0"><div><b>your art here</b>HR approves everything</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -488,12 +601,150 @@
     load(); setInterval(load, 30000);
   }
 
+  // ---------- shared canvas helpers ----------
+  const loadImg = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+  const fontsReady = Promise.all([
+    document.fonts.load('800 40px "Bricolage Grotesque"'), document.fonts.load('700 40px "Bricolage Grotesque"'),
+    document.fonts.load('700 60px Fraunces'), document.fonts.load('italic 500 30px Fraunces')
+  ]).catch(() => {});
+  function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function wrap(c, text, maxW) {
+    const words = text.split(/\s+/).filter(Boolean), lines = []; let line = '';
+    for (const w of words) { const t = line ? line + ' ' + w : w; if (c.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+    if (line) lines.push(line); return lines;
+  }
+  function hash(s) { let h = 2166136261; for (const ch of s) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+  // ---------- Clock in: employee badge ----------
+  const DEPTS = ['Meetings', 'Per My Last Email', 'Greg (Plant) Care', 'Briefcase Security', 'Waiting For Dave', 'Coffee Logistics', 'Calendar Invites', 'Being Slightly Late', 'The 8:59 Department'];
+  const TITLES = ['Junior Associate', 'Senior Coworker', 'Head of 8:59', 'Regional Manager of Nothing', 'Intern (unpaid)', 'VP of Vibes', 'Assistant to Wendel', 'Chief Meeting Attendee'];
+  let heroImg = null, badgeInfo = null;
+  async function drawBadge(nameRaw) {
+    await fontsReady; if (!heroImg) heroImg = await loadImg('img/hero_1200.webp');
+    const name = (nameRaw || '').trim() || 'new coworker';
+    const h = hash(name.toLowerCase()), num = 1000 + (h % 9000);
+    const dept = DEPTS[h % DEPTS.length], title = TITLES[(h >>> 8) % TITLES.length];
+    const ny = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    const cv = $('#badge'), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+    c.clearRect(0, 0, W, H); c.fillStyle = '#14100d'; c.fillRect(0, 0, W, H);
+    // card
+    const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#f6eee2'); g.addColorStop(1, '#e6d6c1');
+    rr(c, 30, 30, W - 60, H - 60, 34); c.fillStyle = g; c.fill();
+    c.save(); rr(c, 30, 30, W - 60, H - 60, 34); c.clip();
+    c.fillStyle = '#f2a7b5'; c.fillRect(30, 30, W - 60, 96);
+    c.restore();
+    // lanyard slot
+    rr(c, W / 2 - 50, 52, 100, 18, 9); c.fillStyle = '#14100d'; c.fill();
+    c.fillStyle = '#1f1a16'; c.font = '800 34px "Bricolage Grotesque", sans-serif'; c.textBaseline = 'middle';
+    c.fillText("WENDEL'S COMPANY", 74, 80);
+    c.font = '700 20px "Bricolage Grotesque", sans-serif'; c.textAlign = 'right'; c.fillText('EMPLOYEE ID  ·  #' + num.toLocaleString('en-US'), W - 74, 80); c.textAlign = 'left';
+    // photo
+    const px = 74, py = 160, pw = 340, ph = 410;
+    c.save(); rr(c, px, py, pw, ph, 26); c.clip();
+    const sw = heroImg.width * .62, sh = sw * ph / pw, sx = heroImg.width * .19, sy = heroImg.height * .1;
+    c.drawImage(heroImg, sx, sy, sw, sh, px, py, pw, ph); c.restore();
+    rr(c, px, py, pw, ph, 26); c.lineWidth = 6; c.strokeStyle = '#ffffff'; c.stroke();
+    // text block
+    const tx = 460; let ty = 190;
+    c.fillStyle = '#8b7a68'; c.font = '700 18px "Bricolage Grotesque", sans-serif'; c.fillText('NAME', tx, ty);
+    let fs = 64; c.font = `700 ${fs}px Fraunces, serif`;
+    while (c.measureText(name).width > W - tx - 90 && fs > 30) { fs -= 2; c.font = `700 ${fs}px Fraunces, serif`; }
+    c.fillStyle = '#1f1a16'; c.fillText(name, tx, ty + 50);
+    ty += 120;
+    const rows = [['TITLE', title], ['DEPARTMENT', dept], ['CLOCKED IN', ny + ' (NYC)']];
+    for (const [k, v] of rows) {
+      c.fillStyle = '#8b7a68'; c.font = '700 16px "Bricolage Grotesque", sans-serif'; c.fillText(k, tx, ty);
+      c.fillStyle = '#2b231d'; c.font = '700 27px "Bricolage Grotesque", sans-serif'; c.fillText(v, tx, ty + 32);
+      ty += 78;
+    }
+    // barcode
+    let bx = W - 330; const by = H - 140;
+    for (let i = 0; i < 46; i++) { const w = 2 + ((h >>> (i % 24)) & 3) * 2; if (i % 2 === 0) { c.fillStyle = '#1f1a16'; c.fillRect(bx, by, w, 64); } bx += w + 1; if (bx > W - 74) break; }
+    c.fillStyle = '#6b6259'; c.font = 'italic 500 22px Fraunces, serif'; c.fillText('he has a meeting at 9.', tx, H - 76);
+    c.fillStyle = '#e98aa0'; c.font = '800 16px "Bricolage Grotesque", sans-serif'; c.fillText('@wendeltheworm', W - 330, H - 60);
+    badgeInfo = { name, num, dept };
+    const text = `i clocked in at wendel's company. employee #${num.toLocaleString('en-US')}, department of ${dept.toLowerCase()}. he has a meeting at 9. @wendeltheworm`;
+    $('#badgeShare').href = 'https://x.com/intent/post?text=' + encodeURIComponent(text);
+  }
+  $('#clockBtn').addEventListener('click', () => drawBadge($('#empName').value));
+  $('#empName').addEventListener('keydown', e => { if (e.key === 'Enter') drawBadge($('#empName').value); });
+  $('#badgeDl').addEventListener('click', e => { try { e.currentTarget.href = $('#badge').toDataURL('image/png'); } catch (err) { e.preventDefault(); } });
+  drawBadge('');
+
+  // ---------- Meme maker ----------
+  const SCENES = ['hero', 'coffee', 'desk', 'corridor', 'elevator', 'meeting', 'plant', 'rain', 'ooo', 'asleep', 'wave'];
+  let scene = 'coffee', style = 'wendel'; const sceneCache = {};
+  $('#picks').innerHTML = SCENES.map(s => `<button type="button" class="pick${s === scene ? ' on' : ''}" data-s="${s}" aria-label="${s}"><img src="img/scene/${s}_t.webp" alt="" loading="lazy"></button>`).join('');
+  $$('#picks .pick').forEach(b => b.addEventListener('click', () => { scene = b.dataset.s; $$('#picks .pick').forEach(x => x.classList.toggle('on', x === b)); drawMeme(); }));
+  $$('#seg button').forEach(b => b.addEventListener('click', () => { style = b.dataset.s; $$('#seg button').forEach(x => x.classList.toggle('on', x === b)); drawMeme(); }));
+  ['#topText', '#botText'].forEach(s => $(s).addEventListener('input', () => drawMeme()));
+  function fitLines(c, text, fontFn, start, min, maxW, maxLines) {
+    let fs = start, lines; do { c.font = fontFn(fs); lines = wrap(c, text, maxW); if (lines.length <= maxLines) break; fs -= 4; } while (fs > min);
+    return { fs, lines };
+  }
+  async function drawMeme() {
+    await fontsReady;
+    const img = sceneCache[scene] || (sceneCache[scene] = await loadImg('img/scene/' + scene + '.webp'));
+    const cv = $('#meme'), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+    c.clearRect(0, 0, W, H); c.drawImage(img, 0, 0, W, H);
+    let top = $('#topText').value.trim(), bot = $('#botText').value.trim();
+    c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    if (style === 'classic') {
+      top = top.toUpperCase(); bot = bot.toUpperCase();
+      const f = n => `${n}px Impact, "Anton", "Arial Black", sans-serif`;
+      c.lineJoin = 'round'; c.strokeStyle = '#000'; c.fillStyle = '#fff';
+      if (top) { const { fs, lines } = fitLines(c, top, f, 96, 40, W - 80, 3); c.lineWidth = fs / 7; lines.forEach((l, i) => { const y = 40 + fs * (i + 1) * .95; c.strokeText(l, W / 2, y); c.fillText(l, W / 2, y); }); }
+      if (bot) { const { fs, lines } = fitLines(c, bot, f, 96, 40, W - 80, 3); c.lineWidth = fs / 7; lines.reverse().forEach((l, i) => { const y = H - 46 - fs * i * .95; c.strokeText(l, W / 2, y); c.fillText(l, W / 2, y); }); }
+    } else {
+      top = top.toLowerCase(); bot = bot.toLowerCase();
+      if (top) {
+        const { fs, lines } = fitLines(c, top, n => `italic 600 ${n}px Fraunces, serif`, 58, 30, W - 120, 3);
+        const gh = 60 + lines.length * fs * 1.15; const g = c.createLinearGradient(0, 0, 0, gh); g.addColorStop(0, 'rgba(0,0,0,.6)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = g; c.fillRect(0, 0, W, gh + 30); c.fillStyle = '#fff'; c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 12;
+        lines.forEach((l, i) => c.fillText(l, W / 2, 50 + fs * (i + 1) * 1.1)); c.shadowBlur = 0;
+      }
+      if (bot) {
+        const { fs, lines } = fitLines(c, bot, n => `800 ${n}px "Bricolage Grotesque", sans-serif`, 66, 30, W - 120, 3);
+        const bh = 70 + lines.length * fs * 1.12;
+        const g = c.createLinearGradient(0, H - bh - 60, 0, H); g.addColorStop(0, 'rgba(10,8,6,0)'); g.addColorStop(.35, 'rgba(10,8,6,.78)'); g.addColorStop(1, 'rgba(10,8,6,.92)');
+        c.fillStyle = g; c.fillRect(0, H - bh - 60, W, bh + 60); c.fillStyle = '#fff';
+        lines.forEach((l, i) => c.fillText(l, W / 2, H - bh + 40 + fs * i * 1.12 + fs * .8));
+      }
+    }
+    c.textAlign = 'right'; c.font = '700 22px "Bricolage Grotesque", sans-serif'; c.fillStyle = 'rgba(255,255,255,.75)'; c.shadowColor = 'rgba(0,0,0,.6)'; c.shadowBlur = 6;
+    c.fillText('@wendeltheworm', W - 26, style === 'classic' ? H - 14 : 40); c.shadowBlur = 0; c.textAlign = 'left';
+  }
+  $('#memeDl').addEventListener('click', e => { try { e.currentTarget.href = $('#meme').toDataURL('image/png'); } catch (err) { e.preventDefault(); } });
+  drawMeme();
+
+  // ---------- Office sounds (made in the browser, no audio files) ----------
+  let actx = null, sndOn = false, sndTimers = [];
+  function noiseBuf(sec, brown) {
+    const b = actx.createBuffer(1, actx.sampleRate * sec, actx.sampleRate), d = b.getChannelData(0); let last = 0;
+    for (let i = 0; i < d.length; i++) { const w = Math.random() * 2 - 1; if (brown) { last = (last + .02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w; }
+    return b;
+  }
+  function soundsOn() {
+    actx = new (window.AudioContext || window.webkitAudioContext)(); const master = actx.createGain(); master.gain.value = .6; master.connect(actx.destination);
+    const hum = actx.createBufferSource(); hum.buffer = noiseBuf(4, true); hum.loop = true; const lp = actx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 240; const hg = actx.createGain(); hg.gain.value = .22; hum.connect(lp).connect(hg).connect(master); hum.start();
+    const clickBuf = noiseBuf(.025, false);
+    const key = t => { const s = actx.createBufferSource(); s.buffer = clickBuf; const bp = actx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800 + Math.random() * 1800; bp.Q.value = 1.3; const g = actx.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.16 + Math.random() * .06, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + .04); s.connect(bp).connect(g).connect(master); s.start(t); };
+    const burst = () => { if (!sndOn) return; let t = actx.currentTime + .05; const n = 6 + Math.floor(Math.random() * 16); for (let i = 0; i < n; i++) { key(t); t += .06 + Math.random() * .12; } sndTimers.push(setTimeout(burst, (t - actx.currentTime) * 1000 + 1800 + Math.random() * 4500)); };
+    const ding = () => { if (!sndOn) return; const t = actx.currentTime; [[880, 0], [660, .32]].forEach(([f, dt]) => { const o = actx.createOscillator(); o.type = 'sine'; o.frequency.value = f; const g = actx.createGain(); g.gain.setValueAtTime(.0001, t + dt); g.gain.exponentialRampToValueAtTime(.09, t + dt + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dt + 1.1); o.connect(g).connect(master); o.start(t + dt); o.stop(t + dt + 1.2); }); sndTimers.push(setTimeout(ding, 28000 + Math.random() * 30000)); };
+    burst(); sndTimers.push(setTimeout(ding, 6000));
+  }
+  function soundsOff() { sndTimers.forEach(clearTimeout); sndTimers = []; if (actx) { actx.close(); actx = null; } }
+  $('#sound').addEventListener('click', () => {
+    sndOn = !sndOn; sndOn ? soundsOn() : soundsOff();
+    $('#sound').setAttribute('aria-pressed', String(sndOn)); $('#sndIcon use').setAttribute('href', sndOn ? '#i-sound' : '#i-mute');
+  });
+
   // reveal on scroll
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
   $$('.reveal').forEach(el => io.observe(el));
 
   // active nav link
-  const secs = ['story','week','office','pfp','verify','buy'].map(id => document.getElementById(id));
+  const secs = ['story','week','clockin','memes','verify','buy'].map(id => document.getElementById(id));
   const navIo = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) $$('.links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
   }), { rootMargin: '-45% 0px -50% 0px' });
