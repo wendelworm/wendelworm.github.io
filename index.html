@@ -287,8 +287,8 @@
     <a class="logo" href="#top"><img src="img/hero_800.webp" alt="">Wendel <span class="chip">$WENDEL</span></a>
     <ul class="links">
       <li><a href="#story">Story</a></li>
-      <li><a href="#week">His week</a></li>
       <li><a href="#clockin">Clock in</a></li>
+      <li><a href="#week">His week</a></li>
       <li><a href="#memes">Memes</a></li>
       <li><a href="#verify">Verify</a></li>
       <li><a href="#buy">Buy</a></li>
@@ -358,6 +358,31 @@
   </div>
 </section>
 
+<section id="clockin" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Human resources</div>
+      <h2>Clock in.</h2>
+      <p class="lead" style="margin-top:14px">Get your official employee badge at Wendel's company. HR assigns your department. HR is not taking questions.</p>
+    </div>
+    <div class="tool reveal">
+      <div class="panel">
+        <div class="field">
+          <label for="empName">Your name (or X handle)</label>
+          <input type="text" id="empName" maxlength="22" placeholder="e.g. @yourname" autocomplete="off">
+        </div>
+        <div class="row">
+          <button class="btn" id="clockBtn" type="button"><svg class="i"><use href="#i-badge"/></svg>Clock in</button>
+          <a class="btn ghost" id="badgeDl" href="#" download="wendel-employee-badge.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
+          <a class="btn ghost" id="badgeShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
+        </div>
+        <p class="hint">Your badge is made on your own device. Nothing is uploaded or stored. To post it, download the picture first, then attach it to the post on X.</p>
+      </div>
+      <div class="canvasbox"><canvas id="badge" width="1200" height="675" aria-label="Your Wendel employee badge"></canvas></div>
+    </div>
+  </div>
+</section>
+
 <section id="week" style="padding-top:20px">
   <div class="wrap">
     <div class="reveal">
@@ -405,31 +430,6 @@
       <a class="pfpc" href="pfp/wendel_pfp_wave.png" download><img src="pfp/wendel_pfp_wave_preview.png" alt="Wendel waving profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Hello</span></a>
       <a class="pfpc" href="pfp/wendel_pfp_coffee.png" download><img src="pfp/wendel_pfp_coffee_preview.png" alt="Wendel with coffee profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Coffee</span></a>
       <a class="pfpc" href="pfp/wendel_pfp_shades.png" download><img src="pfp/wendel_pfp_shades_preview.png" alt="Wendel out of office profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Out of office</span></a>
-    </div>
-  </div>
-</section>
-
-<section id="clockin" style="padding-top:20px">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">Human resources</div>
-      <h2>Clock in.</h2>
-      <p class="lead" style="margin-top:14px">Get your official employee badge at Wendel's company. HR assigns your department. HR is not taking questions.</p>
-    </div>
-    <div class="tool reveal">
-      <div class="panel">
-        <div class="field">
-          <label for="empName">Your name (or X handle)</label>
-          <input type="text" id="empName" maxlength="22" placeholder="e.g. @yourname" autocomplete="off">
-        </div>
-        <div class="row">
-          <button class="btn" id="clockBtn" type="button"><svg class="i"><use href="#i-badge"/></svg>Clock in</button>
-          <a class="btn ghost" id="badgeDl" href="#" download="wendel-employee-badge.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
-          <a class="btn ghost" id="badgeShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
-        </div>
-        <p class="hint">Your badge is made on your own device. Nothing is uploaded or stored. To post it, download the picture first, then attach it to the post on X.</p>
-      </div>
-      <div class="canvasbox"><canvas id="badge" width="1200" height="675" aria-label="Your Wendel employee badge"></canvas></div>
     </div>
   </div>
 </section>
@@ -789,7 +789,7 @@
   $$('.reveal').forEach(el => io.observe(el));
 
   // active nav link
-  const secs = ['story','week','clockin','memes','verify','buy'].map(id => document.getElementById(id));
+  const secs = ['story','clockin','week','memes','verify','buy'].map(id => document.getElementById(id));
   const navIo = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) $$('.links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
   }), { rootMargin: '-45% 0px -50% 0px' });
