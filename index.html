@@ -630,7 +630,7 @@
     const KIND = c => (c >= 71 && c <= 77) || c === 85 || c === 86 ? 'snow'
       : (c >= 51 && c <= 67) || (c >= 80 && c <= 82) ? 'rain'
       : c >= 95 ? 'storm' : '';
-    function size() { if (!cv) return; cv.width = innerWidth; cv.height = innerHeight; }
+    function size() { if (!cv) return; cv.width = innerWidth; cv.height = innerHeight; if (still && kind) draw(); }
     function seed(k) {
       const n = k === 'snow' ? 70 : 90; parts = [];
       for (let i = 0; i < n; i++) parts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight,
@@ -650,11 +650,11 @@
           if (p.y > cv.height) { p.y = -20; p.x = Math.random() * (cv.width + 100); }
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + 2, p.y - 14); ctx.stroke(); }
       }
-      raf = requestAnimationFrame(draw);
+      if (!still) raf = requestAnimationFrame(draw); // reduced motion: one still frame, no movement
     }
     function setFx(k) {
       if (k === kind) return; kind = k; cancelAnimationFrame(raf);
-      if (!k || still) { if (cv) cv.remove(); cv = null; return; }
+      if (!k) { if (cv) cv.remove(); cv = null; return; }
       if (!cv) { cv = document.createElement('canvas'); cv.id = 'wx'; cv.setAttribute('aria-hidden', 'true');
         document.body.appendChild(cv); ctx = cv.getContext('2d'); size(); addEventListener('resize', size); }
       seed(k === 'storm' ? 'rain' : k); kind = k === 'storm' ? 'rain' : k; draw();
@@ -672,7 +672,7 @@
         note.hidden = false; setFx(k);
       } catch (e) { /* no weather is fine */ }
     }
-    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else if (cv) draw(); });
+    document.addEventListener('visibilitychange', () => { cancelAnimationFrame(raf); if (!document.hidden && cv && !still) draw(); });
     load(); setInterval(load, 15 * 60 * 1000);
   })();
 
