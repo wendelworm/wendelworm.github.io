@@ -83,6 +83,8 @@
   .clock .sep{opacity:.35}
   .clock span,.clock b{white-space:nowrap}
   @media(max-width:480px){.clock{font-size:12px;gap:8px;padding:9px 12px}.clock b{font-size:13px}}
+  .wxnote{margin:-14px 0 22px 6px;font:500 13px/1.4 var(--ui);color:var(--beige);opacity:.75}
+  #wx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:40}
   @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(134,239,172,0)}100%{box-shadow:0 0 0 0 rgba(134,239,172,0)}}
   .hero .art{position:relative;justify-self:center;width:min(100%,560px);aspect-ratio:1;transform:translateY(var(--float,0))}
   .hero .art .frame{width:100%;height:100%;border-radius:34px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);animation:bob 6s ease-in-out infinite}
@@ -315,6 +317,7 @@
       <h1>Wendel</h1>
       <p class="tag">Wendel is a worm. He has a meeting at 9.</p>
       <div class="clock" id="clock"><span class="dot"></span><span>New York</span><b id="nyTime">--:--</b><span class="sep">|</span><span id="nextMeet">next meeting soon</span></div>
+      <div class="wxnote" id="wxNote" hidden></div>
       <p class="lead">A small pink earthworm who takes his job extremely seriously. Nobody knows what the job is. He is always slightly late. He believes in the company.</p>
       <div class="ca">
         <code id="ca">CA: launching soon</code>
@@ -617,6 +620,61 @@
     $$('.day').forEach(c => c.classList.toggle('today', +c.dataset.dow === showDow));
   }
   tickClock(); setInterval(tickClock, 15000);
+
+  // Live New York weather (Open-Meteo, no key). The office is in New York, so the site's weather is New York's.
+  // Snow/rain only fall here when they are really falling in New York.
+  (function () {
+    const note = $('#wxNote');
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let cv = null, ctx = null, parts = [], kind = '', raf = 0;
+    const KIND = c => (c >= 71 && c <= 77) || c === 85 || c === 86 ? 'snow'
+      : (c >= 51 && c <= 67) || (c >= 80 && c <= 82) ? 'rain'
+      : c >= 95 ? 'storm' : '';
+    function size() { if (!cv) return; cv.width = innerWidth; cv.height = innerHeight; }
+    function seed(k) {
+      const n = k === 'snow' ? 70 : 90; parts = [];
+      for (let i = 0; i < n; i++) parts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+        r: k === 'snow' ? 1 + Math.random() * 2.2 : 0, v: k === 'snow' ? .4 + Math.random() * .8 : 7 + Math.random() * 5,
+        d: Math.random() * Math.PI * 2 });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      if (kind === 'snow') {
+        ctx.fillStyle = 'rgba(255,255,255,.75)';
+        for (const p of parts) { p.y += p.v; p.d += .01; p.x += Math.sin(p.d) * .4;
+          if (p.y > cv.height) { p.y = -5; p.x = Math.random() * cv.width; }
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); }
+      } else {
+        ctx.strokeStyle = 'rgba(190,210,235,.35)'; ctx.lineWidth = 1;
+        for (const p of parts) { p.y += p.v; p.x -= 1;
+          if (p.y > cv.height) { p.y = -20; p.x = Math.random() * (cv.width + 100); }
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + 2, p.y - 14); ctx.stroke(); }
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    function setFx(k) {
+      if (k === kind) return; kind = k; cancelAnimationFrame(raf);
+      if (!k || still) { if (cv) cv.remove(); cv = null; return; }
+      if (!cv) { cv = document.createElement('canvas'); cv.id = 'wx'; cv.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(cv); ctx = cv.getContext('2d'); size(); addEventListener('resize', size); }
+      seed(k === 'storm' ? 'rain' : k); kind = k === 'storm' ? 'rain' : k; draw();
+    }
+    async function load() {
+      try {
+        const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.7128&longitude=-74.006&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America%2FNew_York');
+        const c = (await r.json()).current; if (!c) return;
+        const force = new URLSearchParams(location.search).get('wx'); // test only: ?wx=snow|rain|storm
+        const t = Math.round(c.temperature_2m) + '°F', k = ['snow', 'rain', 'storm'].includes(force) ? force : KIND(c.weather_code);
+        note.textContent = k === 'snow' ? `snowing in New York, ${t}. Wendel came in anyway.`
+          : k === 'rain' ? `raining in New York, ${t}. Wendel brought the spare briefcase.`
+          : k === 'storm' ? `storm over New York, ${t}. Wendel is staying late.`
+          : `${t} in New York.`;
+        note.hidden = false; setFx(k);
+      } catch (e) { /* no weather is fine */ }
+    }
+    document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else if (cv) draw(); });
+    load(); setInterval(load, 15 * 60 * 1000);
+  })();
 
   // Live market stats (only after launch)
   function fmt(n) { return n >= 1e6 ? '$' + (n / 1e6).toFixed(2) + 'M' : n >= 1e3 ? '$' + (n / 1e3).toFixed(1) + 'K' : '$' + Math.round(n); }
