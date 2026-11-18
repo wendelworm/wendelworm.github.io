@@ -173,6 +173,16 @@
   .links2 a small{margin-left:auto;color:var(--muted);font-weight:500;font-size:13px}
   .links2 a[aria-disabled="true"]{opacity:.5;pointer-events:none}
   @media(max-width:860px){.verify .card{grid-template-columns:1fr;padding:26px}}
+  .verify .card.rcpt{display:block}
+  .rcpt h3{margin:0;font:800 22px/1.2 var(--ui);color:var(--ink)}
+  .rcpt .sub{margin:6px 0 0;color:var(--muted)}
+  .rlist{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+  .verify .rlist li{display:grid;grid-template-columns:110px 1fr auto;gap:14px;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:13px 16px}
+  .rlist .d{color:var(--muted);font:600 13px/1.2 var(--ui)}
+  .rlist a{font:700 14px/1 var(--ui);color:var(--blue);text-decoration:none;white-space:nowrap}
+  .rlist a:hover{text-decoration:underline}
+  .verify .rlist li.empty{display:block;color:var(--muted);text-align:center;border-style:dashed}
+  @media(max-width:560px){.verify .rlist li{grid-template-columns:1fr}}
 
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
@@ -497,9 +507,10 @@
           <li><span class="check">1</span><div><b>One dev wallet, ever.</b><br><span id="devtext">Published at launch.</span></div></li>
           <li><span class="check">2</span><div><b>Dev buy: 0.5 SOL at creation</b><br><span>About 1.76% of supply, bought in the creation transaction and disclosed before launch.</span></div></li>
           <li><span class="check">3</span><div><b>No dev sells for 30 days.</b><br><span>After that, at most 25% of the dev bag per week, announced on X 24 hours before, with the transaction posted after.</span></div></li>
-          <li><span class="check">4</span><div><b>Creator fees go to the dev wallet and are reported weekly</b><br><span>Every claim posted on X with the transaction link.</span></div></li>
-          <li><span class="check">5</span><div><b>The office shredder: 25% of each week's creator fees buys $WENDEL and burns it</b><br><span>Every Friday. The buy and the burn are both posted with transaction links. Burned tokens are gone forever, so the dev's share never grows.</span></div></li>
-          <li><span class="check">6</span><div><b>No helper wallets, bundles, volume bots or paid shills.</b><br><span>Any paid post will be labelled as paid. The pump.fun board shows snipers, bundlers, dev holdings and top-10 for every coin. Check ours.</span></div></li>
+          <li><span class="check">4</span><div><b>Half of the dev bag gets locked for 90 days.</b><br><span>Within 24 hours of launch, half of the dev tokens go into a public Streamflow lock. Nobody can move them until the lock ends, not even us. The lock link is posted here and on X.</span></div></li>
+          <li><span class="check">5</span><div><b>Creator fees go to the dev wallet and are reported weekly</b><br><span>Every claim posted on X with the transaction link.</span></div></li>
+          <li><span class="check">6</span><div><b>The office shredder: 25% of each week's creator fees buys $WENDEL and burns it</b><br><span>Every Friday. The buy and the burn are both posted with transaction links. Burned tokens are gone forever, so the dev's share never grows.</span></div></li>
+          <li><span class="check">7</span><div><b>No helper wallets, bundles, volume bots or paid shills.</b><br><span>Any paid post will be labelled as paid. The pump.fun board shows snipers, bundlers, dev holdings and top-10 for every coin. Check ours.</span></div></li>
         </ul>
       </div>
       <div class="links2">
@@ -510,6 +521,11 @@
         <a id="rug" href="#" rel="noopener"><span class="ico"><svg class="i"><use href="#i-shield"/></svg></span>Token safety<small>RugCheck</small></a>
         <a id="scan" href="#" rel="noopener"><span class="ico"><svg class="i"><use href="#i-scan"/></svg></span>Token on-chain<small>Solscan</small></a>
       </div>
+    </div>
+    <div class="card rcpt reveal" id="receipts" style="margin-top:24px">
+      <h3>Receipts</h3>
+      <p class="sub">The HR file. Every dev buy, lock, fee claim and burn, with its transaction link. Newest first.</p>
+      <ul class="rlist" id="rlist"><li class="empty">Nothing filed yet. The first receipts arrive on launch day.</li></ul>
     </div>
   </div>
 </section>
@@ -539,6 +555,7 @@
       <details><summary>What is the utility?</summary><p>There is none. Wendel is a meme coin about a worm with a meeting. If someone tells you otherwise, they are not Wendel.</p></details>
       <details><summary>Who is the team?</summary><p>One developer, one public wallet, posting as HR (wendel_hr on pump.fun). Everything the dev does with the coin is on-chain and linked from the Verify section.</p></details>
       <details><summary>Will the dev sell?</summary><p>Not for the first 30 days. After that, at most 25% of the dev bag per week, announced 24 hours in advance, with the transaction posted after. That rule is public and the chain will show whether it was kept.</p></details>
+      <details><summary>Are any tokens locked?</summary><p>Yes. Within 24 hours of launch, half of the dev bag goes into a Streamflow lock for 90 days. It is public, on-chain, and nobody can move those tokens early, including us. The link goes in the Receipts list above and on X.</p></details>
       <details><summary>What happens to the creator fees?</summary><p>They go to the one public dev wallet and are reported every week. Every Friday, 25% of that week's fees buys $WENDEL on the open market and sends it to the burn address. We call it the office shredder. Both transactions are posted, so anyone can check.</p></details>
       <details><summary>Someone DM'd me about "DexScreener" or "verification".</summary><p>That's not us. We never DM first, never ask you to send SOL, never ask you to connect your wallet anywhere. Report and block.</p></details>
       <details><summary>What's in the briefcase?</summary><p>Company property.</p></details>
@@ -571,6 +588,8 @@
   const CA = "";
   const DEV = "";
   const TELEGRAM = "https://t.me/wendelsoffice";
+  // Receipts, newest first: { date: "Nov 20", what: "Dev buy: 0.5 SOL at creation", url: "https://solscan.io/tx/..." }
+  const RECEIPTS = [];
   // =======================================
 
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
@@ -588,6 +607,17 @@
     startStats();
   } else {
     ['#buy','#buyNav','#buyFoot','#pumplink','#dex','#dexFoot','#bubble','#rug','#scan','#fomo'].forEach(s => off($(s)));
+  }
+  if (RECEIPTS.length) {
+    const ul = $('#rlist'); ul.innerHTML = '';
+    RECEIPTS.forEach(r => {
+      const li = document.createElement('li');
+      const d = document.createElement('span'); d.className = 'd'; d.textContent = r.date;
+      const w = document.createElement('span'); w.textContent = r.what;
+      li.append(d, w);
+      if (r.url) { const a = document.createElement('a'); a.href = r.url; a.rel = 'noopener'; a.textContent = 'View tx'; li.append(a); }
+      ul.append(li);
+    });
   }
   if (DEV) { $('#devtext').textContent = DEV; setHref('#devlink', 'https://solscan.io/account/' + DEV); } else off($('#devlink'));
   if (TELEGRAM) { ['#tg','#tgNav','#tgFoot'].forEach(s => setHref(s, TELEGRAM)); $('#tgSoon').remove(); } else ['#tg','#tgNav','#tgFoot'].forEach(s => off($(s)));
