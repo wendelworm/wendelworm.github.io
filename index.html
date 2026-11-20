@@ -447,6 +447,20 @@
       <a class="pfpc" href="pfp/wendel_pfp_coffee.png" download><img src="pfp/wendel_pfp_coffee_preview.png" alt="Wendel with coffee profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Coffee</span></a>
       <a class="pfpc" href="pfp/wendel_pfp_shades.png" download><img src="pfp/wendel_pfp_shades_preview.png" alt="Wendel out of office profile picture" loading="lazy"><span><svg class="i"><use href="#i-down"/></svg>Out of office</span></a>
     </div>
+    <div class="tool reveal" id="booth">
+      <div class="panel">
+        <label>The photo booth</label>
+        <h3 style="margin:0 0 10px;font:700 30px/1.15 Fraunces,serif">Roll your Wendel.</h3>
+        <p class="hint" style="margin:0 0 18px">One tap, one coworker: a Wendel photo, a frame and an HR stamp. <span id="boothCount"></span></p>
+        <div class="row">
+          <button class="btn" id="boothRoll" type="button">Roll again</button>
+          <a class="btn ghost" id="boothDl" href="#" download="wendel-pfp.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
+          <a class="btn ghost" id="boothShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
+        </div>
+        <p class="hint">Square, made for profile pictures. It is made on your own device; nothing is uploaded. Free to use. Matching with friends is encouraged.</p>
+      </div>
+      <div class="canvasbox"><canvas id="boothCv" width="1000" height="1000" aria-label="Your rolled Wendel profile picture"></canvas></div>
+    </div>
     <p class="note reveal">New photos every Friday at <a href="https://x.com/WendelPFPs" rel="noopener">@WendelPFPs</a>, the company photo booth. Always free. Artists always credited.</p>
   </div>
 </section>
@@ -795,6 +809,38 @@
   $('#empName').addEventListener('input', () => { cancelAnimationFrame(badgeRaf); badgeRaf = requestAnimationFrame(() => drawBadge($('#empName').value)); });
   $('#badgeDl').addEventListener('click', e => { try { e.currentTarget.href = $('#badge').toDataURL('image/png'); } catch (err) { e.preventDefault(); } });
   drawBadge('');
+
+  // ---------- Photo booth: roll your Wendel ----------
+  const BOOTH_PICS = ["asleep","badge","coffee","coffee_machine","corridor_859","elevator","out_of_office","photo_booth","plant","rain","wave"];
+  const BOOTH_FRAMES = ["#f2a7b5","#6b95f0","#e8d6be","#9fd8c0","#f5d77a","#2a211b"];
+  const BOOTH_STAMPS = ["", "9:00", "HR approved", "on time (mostly)", "per my last email", "#"];
+  const boothCache = {}; let boothLast = "";
+  $("#boothCount").textContent = (BOOTH_PICS.length * BOOTH_FRAMES.length * BOOTH_STAMPS.length) + " possible coworkers. zero bad rolls.";
+  async function boothRoll() {
+    await fontsReady;
+    let p, f, st, key;
+    do { p = BOOTH_PICS[Math.floor(Math.random() * BOOTH_PICS.length)]; f = BOOTH_FRAMES[Math.floor(Math.random() * BOOTH_FRAMES.length)]; st = BOOTH_STAMPS[Math.floor(Math.random() * BOOTH_STAMPS.length)]; key = p + f + st; } while (key === boothLast);
+    boothLast = key;
+    if (!boothCache[p]) boothCache[p] = await loadImg("pfp/gen/" + p + ".webp");
+    const img = boothCache[p], cv = $("#boothCv"), c = cv.getContext("2d"), W = cv.width;
+    c.clearRect(0, 0, W, W); c.fillStyle = f; c.fillRect(0, 0, W, W);
+    const R = W / 2 - 46;
+    c.save(); c.beginPath(); c.arc(W / 2, W / 2, R, 0, Math.PI * 2); c.clip(); c.drawImage(img, W / 2 - R, W / 2 - R, R * 2, R * 2); c.restore();
+    c.beginPath(); c.arc(W / 2, W / 2, R, 0, Math.PI * 2); c.lineWidth = 14; c.strokeStyle = "#fffaf3"; c.stroke();
+    let label = st;
+    if (st === "#") label = "employee #" + String(3 + Math.floor(Math.random() * 9997)).padStart(4, "0");
+    if (label) {
+      c.save(); c.translate(W / 2, W - 190); c.rotate(-0.06);
+      c.font = "800 46px \"Bricolage Grotesque\", sans-serif"; const tw = c.measureText(label).width;
+      rr(c, -tw / 2 - 30, -40, tw + 60, 80, 40); c.fillStyle = "#f2a7b5"; c.fill(); c.lineWidth = 6; c.strokeStyle = "#fffaf3"; c.stroke();
+      c.fillStyle = "#1f1a16"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(label, 0, 2); c.restore();
+    }
+    const text = "got my wendel from the company photo booth. he has a meeting at 9. @WendelPFPs @wendeltheworm";
+    $("#boothShare").href = "https://x.com/intent/post?text=" + encodeURIComponent(text);
+  }
+  $("#boothRoll").addEventListener("click", boothRoll);
+  $("#boothDl").addEventListener("click", e => { try { e.currentTarget.href = $("#boothCv").toDataURL("image/png"); } catch (err) { e.preventDefault(); } });
+  boothRoll();
 
   // ---------- Meme maker ----------
   const SCENES = ['hero', 'coffee', 'desk', 'corridor', 'elevator', 'meeting', 'plant', 'rain', 'ooo', 'asleep', 'wave'];
