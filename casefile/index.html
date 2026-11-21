@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case #0002 · Wendel</title>
+<meta name="description" content="HR investigation board: who is employee #0002? Every clue so far, pinned up. Case still open.">
+<meta property="og:title" content="Case #0002 — who is the other employee?">
+<meta property="og:description" content="Every clue so far, pinned up. Case still open.">
+<meta property="og:image" content="https://wendeltheworm.com/img/case/two_of_us.webp">
+<meta property="og:url" content="https://wendeltheworm.com/casefile/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@wendeltheworm">
+<meta name="twitter:image" content="https://wendeltheworm.com/img/case/two_of_us.webp">
+<link rel="canonical" href="https://wendeltheworm.com/casefile/">
+<link rel="icon" href="../img/icon_512.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Fraunces:opsz,wght,SOFT@9..144,500..800,100&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14100d; --panel:#231b15; --line:#3a2e25; --ink:#f4ead9; --muted:#b9a995;
+    --cork:#a8774a; --cork2:#8d6139; --paper:#f6eee2; --paper2:#e9dac6; --pinkp:#f2a7b5; --pink2:#e98aa0; --red:#c8433a; --dark:#1f1a16;
+    --ui:"Bricolage Grotesque",Inter,system-ui,sans-serif; --serif:Fraunces,Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0}
+  .logo{display:flex;align-items:center;gap:10px;font:800 20px/1 var(--ui);text-decoration:none}
+  .logo img{width:36px;height:36px;border-radius:50%}
+  .back{font:700 14px/1 var(--ui);color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:10px 14px}
+  .back:hover{color:var(--ink);border-color:var(--pinkp)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12px/1 var(--ui);letter-spacing:.2em;text-transform:uppercase;color:var(--pinkp);margin:26px 0 14px}
+  .eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--pinkp)}
+  h1{font:700 clamp(38px,7vw,76px)/1 var(--serif);letter-spacing:-.02em;margin:0}
+  .lead{color:var(--muted);font-size:18px;max-width:640px;margin:16px 0 0}
+  .stamp{display:inline-block;margin-top:18px;font:800 15px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--red);border:3px solid var(--red);border-radius:8px;padding:8px 12px;transform:rotate(-3deg)}
+  .board{margin:34px 0 0;border-radius:22px;padding:28px;background:
+      radial-gradient(circle at 20% 30%,rgba(255,255,255,.06) 0 2px,transparent 3px) 0 0/22px 22px,
+      radial-gradient(circle at 70% 60%,rgba(0,0,0,.12) 0 2px,transparent 3px) 0 0/18px 18px,
+      linear-gradient(160deg,var(--cork),var(--cork2));
+    box-shadow:inset 0 0 0 10px #5b3d24,inset 0 0 0 12px #3f2a18,0 30px 80px rgba(0,0,0,.45)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:start}
+  .card{position:relative;background:linear-gradient(180deg,var(--paper),var(--paper2));color:var(--dark);border-radius:6px;padding:12px 12px 16px;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+  .card:nth-child(3n+1){transform:rotate(-1.6deg)} .card:nth-child(3n+2){transform:rotate(1.2deg)} .card:nth-child(3n){transform:rotate(-.6deg)}
+  .card::before{content:"";position:absolute;top:-9px;left:50%;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8f8f,var(--red));box-shadow:0 3px 5px rgba(0,0,0,.4)}
+  .card img{border-radius:4px;aspect-ratio:1/1;object-fit:cover;width:100%}
+  .num{font:800 12px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:#8b7a68;margin:12px 0 6px}
+  .quote{font:600 19px/1.3 var(--serif);margin:0}
+  .when{font:600 13px/1.3 var(--ui);color:#6b6259;margin:8px 0 0}
+  .note{background:#fff7a8;color:var(--dark)}
+  .note .quote{font-family:var(--ui);font-weight:700;font-size:17px}
+  .text-only{display:flex;flex-direction:column;justify-content:center;min-height:220px}
+  h2{font:700 clamp(28px,4.5vw,44px)/1.05 var(--serif);margin:56px 0 0;letter-spacing:-.02em}
+  .suspects{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+  .sus{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .sus b{display:block;font:700 22px/1.15 var(--serif);margin-bottom:6px}
+  .sus span{color:var(--muted);font-size:14px}
+  .btn{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:var(--pinkp);color:var(--dark);font:800 15px/1 var(--ui);padding:14px 20px;border-radius:999px;text-decoration:none}
+  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);margin-left:8px}
+  .theories{margin-top:22px;background:var(--panel);border:1px dashed var(--line);border-radius:18px;padding:22px;color:var(--muted)}
+  footer{margin:70px 0 40px;color:var(--muted);font:500 14px/1.5 var(--ui);border-top:1px solid var(--line);padding-top:22px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.suspects{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}.board{padding:18px}.btn.ghost{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="../"><img src="../img/hero_800.webp" alt="">Wendel</a>
+    <a class="back" href="../">← back to the office</a>
+  </header>
+
+  <div class="eyebrow">HR investigation</div>
+  <h1>Case #0002</h1>
+  <p class="lead">Wendel is employee #0001. He has always been the only one. Then, this week, small things started happening at the office. HR pinned every clue to the board.</p>
+  <div class="stamp">case still open</div>
+
+  <div class="board">
+    <div class="grid">
+      <div class="card"><img src="../img/case/empty_cup.webp" alt="An empty coffee cup by a closed office door" loading="lazy"><div class="num">Clue 1</div><p class="quote">"the coffee is gone. i didn't drink it."</p><p class="when">Tue Nov 17 · 7:00 PM New York</p></div>
+      <div class="card"><img src="../img/case/moved_chair.webp" alt="An empty meeting room with one chair pulled out" loading="lazy"><div class="num">Clue 2</div><p class="quote">"nobody came. but someone moved a chair."</p><p class="when">Wed Nov 18 · 12:30 PM New York</p></div>
+      <div class="card note text-only"><div class="num">Clue 3 · HR notice</div><p class="quote">Badge #0002 was used at the front door at 6:02 AM. HR has no badge #0002 on file.</p><p class="when">Wed Nov 18 · posted in Wendel's Office (Telegram)</p></div>
+      <div class="card"><img src="../img/case/coffee_machine.webp" alt="Wendel at the office coffee machine" loading="lazy"><div class="num">Clue 4</div><p class="quote">"someone made coffee before me. nobody makes coffee before me."</p><p class="when">Thu Nov 19 · 9:00 AM New York</p></div>
+      <div class="card note text-only"><div class="num">Clue 5 · calendar</div><p class="quote">"the 9:00 has a new attendee. status: accepted. no name."</p><p class="when">Thu Nov 19 · 12:30 PM New York</p></div>
+      <div class="card"><img src="../img/case/night_window.webp" alt="Wendel at the office window at night" loading="lazy"><div class="num">Clue 6</div><p class="quote">"still at the office. so is someone on the 14th floor."</p><p class="when">Thu Nov 19 · 11:40 PM New York</p></div>
+      <div class="card"><img src="../img/case/two_of_us.webp" alt="Wendel at the meeting table, a second coffee at the empty chair opposite" loading="lazy"><div class="num">Clue 7</div><p class="quote">"the meeting started at 9:00. there were two of us."</p><p class="when">Fri Nov 20 · 9:00 AM New York</p></div>
+      <div class="card note text-only"><div class="num">Clue 8</div><p class="quote">"they left before i looked up. they took better notes than me."</p><p class="when">Fri Nov 20 · 12:30 PM New York</p></div>
+      <div class="card note text-only"><div class="num">Clue 9</div><p class="quote">"out of office. the other chair is still warm."</p><p class="when">Fri Nov 20 · 5:00 PM New York</p></div>
+    </div>
+  </div>
+
+  <h2>The suspects</h2>
+  <div class="suspects">
+    <div class="sus"><b>Dave</b><span>from accounts. never shows up. or does he?</span></div>
+    <div class="sus"><b>someone on the 14th floor</b><span>the lights were on at 11:40 PM.</span></div>
+    <div class="sus"><b>Greg (the plant)</b><span>has been in the office longer than anyone.</span></div>
+    <div class="sus"><b>HR made a mistake</b><span>HR does not make mistakes. (HR is checking.)</span></div>
+  </div>
+  <a class="btn" href="https://x.com/wendeltheworm" rel="noopener">Vote in the HR survey on X</a><a class="btn ghost" href="https://t.me/wendelsoffice" rel="noopener">Share a theory in Wendel's Office</a>
+
+  <h2>Theories wall</h2>
+  <div class="theories">No theories pinned yet. Share yours in Wendel's Office on Telegram or in the replies on X. The best ones get pinned here, with credit.</div>
+
+  <footer>New clues every weekday at 9:00 New York, on <a href="https://x.com/wendeltheworm" rel="noopener">@wendeltheworm</a>. Wendel is a worm. He has a meeting at 9.</footer>
+</div>
+</body>
+</html>

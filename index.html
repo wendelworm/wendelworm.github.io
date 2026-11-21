@@ -248,6 +248,7 @@
   .seg button{border:0;background:none;color:var(--muted);font:700 14px/1 var(--ui);padding:9px 14px;border-radius:999px}
   .seg button.on{background:rgba(242,167,181,.18);color:var(--ink)}
   .field{margin-bottom:16px}
+  nav li a{white-space:nowrap}
   @media(max-width:900px){.tool{grid-template-columns:1fr}.tool .canvasbox{order:-1}.picks{grid-template-columns:repeat(4,1fr)}}
 
   /* fridge */
@@ -305,6 +306,7 @@
       <li><a href="#clockin">Clock in</a></li>
       <li><a href="#week">His week</a></li>
       <li><a href="#memes">Memes</a></li>
+      <li><a href="casefile/">Case #0002</a></li>
       <li><a href="#verify">Verify</a></li>
       <li><a href="#how-to-buy">Buy</a></li>
     </ul>
@@ -485,6 +487,29 @@
         </div>
       </div>
       <div class="canvasbox"><canvas id="meme" width="1080" height="1080" aria-label="Your Wendel meme"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<section id="ooo" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Automatic reply</div>
+      <h2>Set your out of office.</h2>
+      <p class="lead" style="margin-top:14px">Going offline? Wendel covers for you. Type your name, pick a reason, post the auto-reply.</p>
+    </div>
+    <div class="tool reveal">
+      <div class="panel">
+        <div class="field"><label for="oooName">Your name</label><input type="text" id="oooName" maxlength="28" placeholder="e.g. @yourname" autocomplete="off"></div>
+        <label>Reason</label>
+        <div class="seg" id="oooSeg" style="flex-wrap:wrap"><button type="button" data-r="weekend" class="on">weekend</button><button type="button" data-r="thanksgiving">Thanksgiving</button><button type="button" data-r="vacation">vacation</button><button type="button" data-r="grass">touching grass</button></div>
+        <div class="row" style="margin-top:14px">
+          <a class="btn" id="oooDl" href="#" download="wendel-out-of-office.png"><svg class="i"><use href="#i-down"/></svg>Download</a>
+          <a class="btn ghost" id="oooShare" href="#" rel="noopener"><svg class="i"><use href="#i-x"/></svg>Post it</a>
+        </div>
+        <p class="hint">Made on your own device; nothing is uploaded. Wendel does not actually do your work. He has a meeting at 9.</p>
+      </div>
+      <div class="canvasbox"><canvas id="oooCv" width="1200" height="675" aria-label="Your out of office auto-reply card"></canvas></div>
     </div>
   </div>
 </section>
@@ -841,6 +866,49 @@
   $("#boothRoll").addEventListener("click", boothRoll);
   $("#boothDl").addEventListener("click", e => { try { e.currentTarget.href = $("#boothCv").toDataURL("image/png"); } catch (err) { e.preventDefault(); } });
   boothRoll();
+
+  // ---------- Out of office: auto-reply card ----------
+  const OOO = {
+    weekend: { subj: "out of office", lines: ["i'm out of office until monday 9:00.", "Wendel is handling it."], share: "set my out of office for the weekend. Wendel is handling it." },
+    thanksgiving: { subj: "out of office: Thanksgiving", lines: ["out for Thanksgiving. back monday 9:00.", "Wendel is handling it. he brought coffee."], share: "out of office for Thanksgiving. Wendel is handling it." },
+    vacation: { subj: "out of office: vacation", lines: ["on vacation. no laptop. no regrets.", "if it's urgent, ask Wendel. he's there at 9."], share: "on vacation. Wendel is covering my desk." },
+    grass: { subj: "out of office: touching grass", lines: ["touching grass. phone in a drawer.", "Wendel is watching my desk."], share: "touching grass. Wendel is watching my desk." }
+  };
+  let oooReason = "weekend", oooImg = null;
+  function oooWrap(c, text, maxW) { const words = text.split(" "), out = []; let line = ""; for (const w of words) { const t = line ? line + " " + w : w; if (c.measureText(t).width > maxW && line) { out.push(line); line = w; } else line = t; } if (line) out.push(line); return out; }
+  async function drawOoo() {
+    await fontsReady; if (!oooImg) oooImg = await loadImg("img/ooo_900.webp");
+    const raw = ($("#oooName").value || "").trim(), name = raw || "a coworker", r = OOO[oooReason];
+    const cv = $("#oooCv"), c = cv.getContext("2d"), W = cv.width, H = cv.height;
+    c.clearRect(0, 0, W, H); c.fillStyle = "#14100d"; c.fillRect(0, 0, W, H);
+    // picture on the right
+    const px = W - 470, py = 30, ps = H - 60;
+    c.save(); rr(c, px, py, 440, ps, 30); c.clip(); c.drawImage(oooImg, oooImg.width * .12, 0, oooImg.width * .76, oooImg.height, px, py, 440, ps); c.restore();
+    // email card on the left
+    const cx = 30, cy = 30, cw = W - 530, ch = H - 60;
+    const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#f6eee2"); g.addColorStop(1, "#e9dac6");
+    rr(c, cx, cy, cw, ch, 30); c.fillStyle = g; c.fill();
+    c.save(); rr(c, cx, cy, cw, ch, 30); c.clip(); c.fillStyle = "#f2a7b5"; c.fillRect(cx, cy, cw, 78); c.restore();
+    c.textBaseline = "middle"; c.fillStyle = "#1f1a16"; c.font = '800 26px "Bricolage Grotesque", sans-serif'; c.fillText("AUTOMATIC REPLY", cx + 40, cy + 40);
+    c.textAlign = "right"; c.font = '700 18px "Bricolage Grotesque", sans-serif'; c.fillText("WENDEL'S COMPANY", cx + cw - 40, cy + 40); c.textAlign = "left";
+    let y = cy + 128;
+    c.fillStyle = "#8b7a68"; c.font = '700 17px "Bricolage Grotesque", sans-serif'; c.fillText("FROM", cx + 40, y);
+    let fs = 44; c.font = `700 ${fs}px Fraunces, serif`; while (c.measureText(name).width > cw - 80 && fs > 24) { fs -= 2; c.font = `700 ${fs}px Fraunces, serif`; }
+    c.fillStyle = "#1f1a16"; c.fillText(name, cx + 40, y + 42);
+    y += 104;
+    c.fillStyle = "#8b7a68"; c.font = '700 17px "Bricolage Grotesque", sans-serif'; c.fillText("SUBJECT", cx + 40, y);
+    c.fillStyle = "#2b231d"; c.font = '700 26px "Bricolage Grotesque", sans-serif'; c.fillText(r.subj, cx + 40, y + 34);
+    y += 92; c.fillStyle = "#d9cfc3"; c.fillRect(cx + 40, y - 16, cw - 80, 2);
+    c.fillStyle = "#1f1a16"; c.font = "500 30px Fraunces, serif";
+    for (const line of r.lines) for (const l of oooWrap(c, line, cw - 80)) { c.fillText(l, cx + 40, y + 20); y += 44; }
+    c.fillStyle = "#6b6259"; c.font = 'italic 500 20px Fraunces, serif'; c.fillText("he has a meeting at 9.", cx + 40, cy + ch - 40);
+    c.fillStyle = "#e98aa0"; c.font = '800 17px "Bricolage Grotesque", sans-serif'; c.textAlign = "right"; c.fillText("@wendeltheworm", cx + cw - 40, cy + ch - 40); c.textAlign = "left";
+    $("#oooShare").href = "https://x.com/intent/post?text=" + encodeURIComponent(r.share + " @wendeltheworm");
+  }
+  $$("#oooSeg button").forEach(b => b.addEventListener("click", () => { $$("#oooSeg button").forEach(x => x.classList.remove("on")); b.classList.add("on"); oooReason = b.dataset.r; drawOoo(); }));
+  let oooRaf = 0; $("#oooName").addEventListener("input", () => { cancelAnimationFrame(oooRaf); oooRaf = requestAnimationFrame(drawOoo); });
+  $("#oooDl").addEventListener("click", e => { try { e.currentTarget.href = $("#oooCv").toDataURL("image/png"); } catch (err) { e.preventDefault(); } });
+  drawOoo();
 
   // ---------- Meme maker ----------
   const SCENES = ['hero', 'coffee', 'desk', 'corridor', 'elevator', 'meeting', 'plant', 'rain', 'ooo', 'asleep', 'wave'];
