@@ -116,8 +116,12 @@
 
   /* marquee */
   .marquee{border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;white-space:nowrap;padding:14px 0;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--muted)}
-  .marquee span{display:inline-block;padding-right:48px;animation:mq 30s linear infinite}
+  .marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .marquee .track{display:inline-flex;width:max-content;animation:mq 45s linear infinite;will-change:transform}
+  .marquee span{display:inline-block;padding-right:48px}
+  .marquee:hover .track{animation-play-state:paused}
   @keyframes mq{to{transform:translateX(-50%)}}
+  @media(max-width:560px){.marquee{font-size:17px;padding:12px 0}.marquee .track{animation-duration:35s}}
 
   section{padding:110px 0;scroll-margin-top:-24px}
   section[style*="padding-top:20px"]{scroll-margin-top:66px}
@@ -268,7 +272,7 @@
   @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr;padding-right:20px}.fridge{padding:24px 20px}.fridge::before{display:none}}
   @media(max-width:400px){.fgrid{gap:16px;padding-right:0}.fridge{overflow-x:clip}}
 
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.marquee span,.hero .art .frame,.clock .dot{animation:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero .art .frame,.clock .dot{animation:none}.marquee .track{animation-duration:90s}}
 </style>
 </head>
 <body>
@@ -365,7 +369,7 @@
   </div>
 </div>
 
-<div class="marquee" aria-hidden="true"><span>he has a meeting at 9 · per my last email · dave from accounts says hi · he believes in the company · the plant is called Greg · he has a meeting at 9 · per my last email · dave from accounts says hi · he believes in the company · the plant is called Greg ·&nbsp;</span><span>he has a meeting at 9 · per my last email · dave from accounts says hi · he believes in the company · the plant is called Greg · he has a meeting at 9 · per my last email · dave from accounts says hi · he believes in the company · the plant is called Greg ·&nbsp;</span></div>
+<div class="marquee" aria-hidden="true"><div class="track"><span>he has a meeting at 9 · per my last email · Dave from accounts says hi · he believes in the company · the plant is called Greg · HR approved this message · he has a meeting at 9 · per my last email · Dave from accounts says hi · he believes in the company · the plant is called Greg · HR approved this message ·&nbsp;</span><span>he has a meeting at 9 · per my last email · Dave from accounts says hi · he believes in the company · the plant is called Greg · HR approved this message · he has a meeting at 9 · per my last email · Dave from accounts says hi · he believes in the company · the plant is called Greg · HR approved this message ·&nbsp;</span></div></div>
 
 <section class="story" id="story">
   <div class="wrap">
