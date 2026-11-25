@@ -520,7 +520,7 @@
         </div>
         <p class="hint">Made on your own device; nothing is uploaded. Wendel does not actually do your work. He has a meeting at 9.</p>
       </div>
-      <div class="canvasbox"><canvas id="oooCv" width="1200" height="675" aria-label="Your out of office auto-reply card"></canvas></div>
+      <div class="canvasbox"><canvas id="oooCv" width="2400" height="1350" aria-label="Your out of office auto-reply card"></canvas></div>
     </div>
   </div>
 </section>
@@ -881,20 +881,20 @@
   // ---------- Out of office: auto-reply card ----------
   const OOO = {
     weekend: { subj: "out of office", lines: ["i'm out of office until monday 9:00.", "Wendel is handling it."], share: "set my out of office for the weekend. Wendel is handling it." },
-    thanksgiving: { subj: "out of office: Thanksgiving", lines: ["out for Thanksgiving. back monday 9:00.", "Wendel is handling it. he brought coffee."], share: "out of office for Thanksgiving. Wendel is handling it." },
+    thanksgiving: { img: "img/ooo_thanksgiving_900.webp", subj: "out of office: Thanksgiving", lines: ["out for Thanksgiving. back monday 9:00.", "Wendel is handling it. he brought coffee."], share: "out of office for Thanksgiving. Wendel is handling it." },
     vacation: { subj: "out of office: vacation", lines: ["on vacation. no laptop. no regrets.", "if it's urgent, ask Wendel. he's there at 9."], share: "on vacation. Wendel is covering my desk." },
     grass: { subj: "out of office: touching grass", lines: ["touching grass. phone in a drawer.", "Wendel is watching my desk."], share: "touching grass. Wendel is watching my desk." }
   };
-  let oooReason = "weekend", oooImg = null;
+  let oooReason = "weekend"; const oooImgs = {};
   function oooWrap(c, text, maxW) { const words = text.split(" "), out = []; let line = ""; for (const w of words) { const t = line ? line + " " + w : w; if (c.measureText(t).width > maxW && line) { out.push(line); line = w; } else line = t; } if (line) out.push(line); return out; }
   async function drawOoo() {
-    await fontsReady; if (!oooImg) oooImg = await loadImg("img/ooo_900.webp");
-    const raw = ($("#oooName").value || "").trim(), name = raw || "a coworker", r = OOO[oooReason];
-    const cv = $("#oooCv"), c = cv.getContext("2d"), W = cv.width, H = cv.height;
+    await fontsReady; const r = OOO[oooReason], src = r.img || "img/ooo_900.webp"; if (!oooImgs[src]) oooImgs[src] = await loadImg(src); const oooImg = oooImgs[src];
+    const raw = ($("#oooName").value || "").trim(), name = raw || "a coworker";
+    const cv = $("#oooCv"), c = cv.getContext("2d"), W = 1200, H = 675; c.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0); c.imageSmoothingQuality = "high";
     c.clearRect(0, 0, W, H); c.fillStyle = "#14100d"; c.fillRect(0, 0, W, H);
     // picture on the right
     const px = W - 470, py = 30, ps = H - 60;
-    c.save(); rr(c, px, py, 440, ps, 30); c.clip(); c.drawImage(oooImg, oooImg.width * .12, 0, oooImg.width * .76, oooImg.height, px, py, 440, ps); c.restore();
+    c.save(); rr(c, px, py, 440, ps, 30); c.clip(); { const tr = 440 / ps, iw = oooImg.width, ih = oooImg.height; let sw = iw, sh = ih; if (iw / ih > tr) sw = ih * tr; else sh = iw / tr; c.drawImage(oooImg, (iw - sw) / 2, (ih - sh) / 2, sw, sh, px, py, 440, ps); } c.restore();
     // email card on the left
     const cx = 30, cy = 30, cw = W - 530, ch = H - 60;
     const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#f6eee2"); g.addColorStop(1, "#e9dac6");
